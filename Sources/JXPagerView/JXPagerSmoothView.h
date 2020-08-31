@@ -79,7 +79,7 @@
 @property (nonatomic, strong, readonly) UICollectionView *listCollectionView;
 @property (nonatomic, assign) NSInteger defaultSelectedIndex;
 @property (nonatomic, weak) id<JXPagerSmoothViewDelegate> delegate;
-
+@property (nonatomic, assign) NSInteger pinSectionHeaderVerticalOffset;
 - (instancetype)initWithDataSource:(id<JXPagerSmoothViewDataSource>)dataSource NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

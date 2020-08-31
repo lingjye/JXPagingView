@@ -247,7 +247,7 @@ static NSString *JXPagerSmoothViewCollectionViewCellIdentifier = @"cell";
         if (scrollView != nil) {
             CGFloat minContentSizeHeight = self.bounds.size.height - self.heightForPinHeader;
             if (minContentSizeHeight > scrollView.contentSize.height) {
-                scrollView.contentSize = CGSizeMake(scrollView.contentSize.width, minContentSizeHeight);
+//                scrollView.contentSize = CGSizeMake(scrollView.contentSize.width, minContentSizeHeight);
                 //新的scrollView第一次加载的时候重置contentOffset
                 if (_currentListScrollView != nil && scrollView != _currentListScrollView) {
                     scrollView.contentOffset = CGPointMake(0, self.currentListInitializeContentOffsetY);
@@ -271,7 +271,7 @@ static NSString *JXPagerSmoothViewCollectionViewCellIdentifier = @"cell";
     }
     self.currentListScrollView = scrollView;
     CGFloat contentOffsetY = scrollView.contentOffset.y + self.heightForPagerHeaderContainerView;
-    if (contentOffsetY < self.heightForPagerHeader) {
+    if (contentOffsetY < self.heightForPagerHeader - self.pinSectionHeaderVerticalOffset) {
         self.syncListContentOffsetEnabled = YES;
         self.currentPagerHeaderContainerViewY = -contentOffsetY;
         for (id<JXPagerSmoothViewListViewDelegate> list in self.listDict.allValues) {
@@ -286,7 +286,7 @@ static NSString *JXPagerSmoothViewCollectionViewCellIdentifier = @"cell";
         }
     }else {
         if (self.pagerHeaderContainerView.superview != self) {
-            self.pagerHeaderContainerView.frame = CGRectMake(0, -self.heightForPagerHeader, self.pagerHeaderContainerView.bounds.size.width, self.pagerHeaderContainerView.bounds.size.height);
+            self.pagerHeaderContainerView.frame = CGRectMake(0, -self.heightForPagerHeader + self.pinSectionHeaderVerticalOffset, self.pagerHeaderContainerView.bounds.size.width, self.pagerHeaderContainerView.bounds.size.height);
             [self addSubview:self.pagerHeaderContainerView];
         }
         if (self.isSyncListContentOffsetEnabled) {
@@ -349,7 +349,7 @@ static NSString *JXPagerSmoothViewCollectionViewCellIdentifier = @"cell";
     self.currentIndex = index;
     UIView *listHeader = self.listHeaderDict[@(index)];
     UIScrollView *listScrollView = [self.listDict[@(index)] listScrollView];
-    if (listHeader != nil && listScrollView.contentOffset.y <= -self.heightForPinHeader) {
+    if (listHeader != nil && listScrollView.contentOffset.y <= -self.heightForPinHeader - self.pinSectionHeaderVerticalOffset) {
         for (id<JXPagerSmoothViewListViewDelegate> listItem in self.listDict.allValues) {
             [listItem listScrollView].scrollsToTop = ([listItem listScrollView] == listScrollView);
         }
